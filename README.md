@@ -5,4 +5,4 @@ Computer Vision @ FIIT STU
 
 ## Task 1 - GrabCut
 
-## Task 2 - Image Segmentation
+## Task 2 - Semi-supervised Segmentation
