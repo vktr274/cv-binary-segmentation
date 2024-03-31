@@ -38,7 +38,7 @@ The red area marks possible foreground, the whie area marks sure foreground, and
 ![Superpixel mask and its distance transform](images/superpixels_and_dist_trans.png)
 4. Compute the local maxima of the distance transform. The result is shown below.\
 ![Local maxima of distance transform](images/local_maxima.png)
-5. Compute Delaunay triangulation of the local maxima and create a graph with nodes as local maxima and edges as Delaunay triangles. The result is shown below.\
+5. Compute Delaunay triangulation of the local maxima using Scipy and create a graph with nodes as local maxima and edges as Delaunay triangles using NetworkX. The result is shown below.\
 ![Delaunay triangulation](images/delaunay.png)
 6. Show image with superpixel contours overlayed with the original image. Allow the user to select points around an area of interest.
 7. Find the closest points to the selected points in array of local maxima.
