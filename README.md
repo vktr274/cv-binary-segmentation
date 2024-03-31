@@ -30,7 +30,7 @@ The red area marks possible foreground, the whie area marks sure foreground, and
 
 ## Task 2 - Semi-supervised Segmentation
 
-## Proposed algorithm
+### Proposed algorithm
 
 1. Load image and blur it with a median filter of size 7x7.
 2. Apply superpixel segmentation with LSC algorithm with a region size of 16 and 20 iterations.
@@ -56,3 +56,5 @@ The red area marks possible foreground, the whie area marks sure foreground, and
 ![Final mask](images/final_mask_2.png)
 14. Apply the mask to the original image. The result is shown below for one of the images in comparison with the ground truth mask.\
 ![Segmented image](images/segmented_2.png)
+
+## Task 3 - Moving Object Segmentation
