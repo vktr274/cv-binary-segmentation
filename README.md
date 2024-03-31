@@ -54,7 +54,7 @@ The red area marks possible foreground, the whie area marks sure foreground, and
 ![After grabcut](images/mask_after_grabcut.png)
 13. Mark sure foreground and possible foreground as sure foreground. The result is shown below in comparison with the ground truth for one of the images.\
 ![Final mask](images/final_mask_2.png)
-14. Apply the mask to the original image. The result is shown below for one of the images in comparison with the ground truth mask.\
+14. Apply the mask to the original image. The result is shown below for one of the images.\
 ![Segmented image](images/segmented_2.png)
 
 ## Task 3 - Moving Object Segmentation
