@@ -67,19 +67,19 @@ The [`segmentation_test.ipynb`](segmentation_test.ipynb) notebook contains the e
 
 #### Image 1
 
-The DICE score between the mask after grabcut and ground truth mask is 88.84%.\
+The DICE score between the mask after grabcut and ground truth mask is 88.84%.
 
 ![Segmented image](images/eval_1.png)
 
 #### Image 2
 
-The DICE score between the mask after grabcut and ground truth mask is 93.58%.\
+The DICE score between the mask after grabcut and ground truth mask is 93.58%.
 
 ![Segmented image](images/eval_2.png)
 
 #### Image 3
 
-The DICE score between the mask after grabcut and ground truth mask is 96.82%.\
+The DICE score between the mask after grabcut and ground truth mask is 96.82%.
 
 ![Segmented image](images/eval_3.png)
 
