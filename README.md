@@ -85,3 +85,33 @@ The DICE score between the mask after grabcut and ground truth mask is 96.82%.
 ![Segmented image](images/eval_3.png)
 
 ## Task 3 - Moving Object Segmentation
+
+The code for the third task is available in the [`task3.ipynb`](task3.ipynb) notebook along with visualizations.
+
+### Segmentation using MOG
+
+![Result 1 using MOG](images/mog1.png)
+
+![Result 2 using MOG](images/mog2.png)
+
+![Result 3 using MOG](images/mog3.png)
+
+### Segmentation using Running Average Background Image
+
+![Result 1 using Running Average Background Image](images/avg1.png)
+
+![Result 2 using Running Average Background Image](images/avg2.png)
+
+![Result 3 using Running Average Background Image](images/avg3.png)
+
+### Dense Optical Flow
+
+![Dense Optical Flow 1](images/dense1.png)
+
+![Dense Optical Flow 2](images/dense2.png)
+
+![Dense Optical Flow 3](images/dense3.png)
+
+### Sparse Optical Flow
+
+TODO
