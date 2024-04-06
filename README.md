@@ -49,9 +49,9 @@ The [`task2.ipynb`](task2.ipynb) notebook contains the implementation of the sem
 8. Find the closest points to the selected points in array of local maxima.
 9. Compute the shortest path between these points using Dijkstra's algorithm. The result is shown below in comparison with the selected local maxima.\
 ![Shortest path](images/local_maxima_selected_found.png)
-10. Create mask of superpixels (each dilated by a rectangular 11x11 structuring element in 1 iteration) that the shortest path traverses. The result is shown below.\
+10. Create mask of superpixels (each dilated by a rectangular 11x11 structuring element in 1 iteration to ensure they are mostly connected) that the shortest path traverses. The result is shown below.\
 ![Mask of superpixels](images/path_superpixels.png)
-11. Dilate the mask in 4 iterations using an 7x7 elliptic structuring element. The result is shown below.\
+11. Dilate the mask in 4 iterations using an 7x7 elliptic structuring element to smooth the mask and connect parts that might not yet be connected. The result is shown below.\
 ![Dilated mask](images/dilated_mask.png)
 12. Find contour of the mask and fill it. Compute XOR of the mask with the dilated mask which results in a mask with containing holes of the dilated mask. This way, we can mark the holes as sure foreground. The result is shown below.\
 ![Created mask](images/created_mask.png)
