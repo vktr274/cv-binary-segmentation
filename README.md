@@ -90,6 +90,10 @@ The code for the third task is available in the [`task3.ipynb`](task3.ipynb) not
 
 ### Segmentation using MOG
 
+To segment the walking person, we used a MOG2 subtractor algorithm with default OpenCV parameters. In the segmentation masks, we ignored shadows (value 127). To improve the masks, we found the largest contour in the mask and filled it ignoring noise from immobile objects and filling small holes in the area where the person is positioned. We also found where to position a bounding box based on the largest contour. Next, we apllied the mask to the original frames.
+
+The results are shown below for 3 frames from the video.
+
 ![Result 1 using MOG](images/mog1.png)
 
 ![Result 2 using MOG](images/mog2.png)
@@ -97,6 +101,10 @@ The code for the third task is available in the [`task3.ipynb`](task3.ipynb) not
 ![Result 3 using MOG](images/mog3.png)
 
 ### Segmentation using Running Average Background Image
+
+The background model was created using a running average with the `cv2.accumulateWeighted` function with alpha 0.02. The background model was then used to segment the walking person using an absolute difference between the background model and the current frame and a threshold of 20. The resulting mask was then processed using morphological closing to fill holes and close gaps near each other. The mask was then processed in the same way as the MOG masks - finding the largest contour, filling it, and finding the bounding box around it to show in the current frame. Next, we segmented the person in the original frames using the mask.
+
+The results are shown below for 3 frames from the video.
 
 ![Result 1 using Running Average Background Image](images/avg1.png)
 
@@ -106,6 +114,20 @@ The code for the third task is available in the [`task3.ipynb`](task3.ipynb) not
 
 ### Dense Optical Flow
 
+The dense optical flow was computed using the Farneback method with OpenCV (`cv2.calcOpticalFlowFarneback`) with the following parameters, which are recommended in the OpenCV documentation (except for the `winsize` parameter, which was set to 10, and `iterations`, which was set to 3):
+
+```py
+params = {
+    "pyr_scale": 0.5,
+    "levels": 1,
+    "winsize": 10,
+    "iterations": 3,
+    "poly_n": 7,
+    "poly_sigma": 1.5,
+    "flags": 0
+}
+```
+
 ![Dense Optical Flow 1](images/dense1.png)
 
 ![Dense Optical Flow 2](images/dense2.png)
@@ -114,7 +136,19 @@ The code for the third task is available in the [`task3.ipynb`](task3.ipynb) not
 
 ### Sparse Optical Flow
 
-To only find points of interest to track in the sparse optical flow, the MOG masks are combined using a bitwise OR operation. The resulting mask is shown below before and after morphological opening with a 15x15 elliptic structuring element to remove noise at the right side of the mask.
+To only find points of interest to track in the sparse optical flow, the MOG masks are combined using a bitwise OR operation. The resulting mask is shown below before and after morphological opening with a 15x15 elliptic structuring element to remove noise at the right side of the mask. We used this mask (the `masks_in_one_improved` variable) in the `cv2.goodFeaturesToTrack` function to find points of interest to track only in the area where the person walks throughout the video. We set the parameters to the following values:
+
+```py
+feature_params = {
+    "mask": masks_in_one_improved,
+    "maxCorners": 25,
+    "qualityLevel": 0.15,
+    "minDistance": 7,
+    "blockSize": 7
+}
+```
+
+The mask used is shown below.
 
 ![Bitwise OR of Each MOG Mask](images/mask_in_one.png)
 
