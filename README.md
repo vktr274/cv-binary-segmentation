@@ -38,7 +38,7 @@ The [`task2.ipynb`](task2.ipynb) notebook contains the implementation of the sem
 
 1. Load image and blur it with a median filter of size 7x7.
 2. Convert the image from BGR to L\*a\*b\* color space for superpixel segmentation.
-3. Apply superpixel segmentation with LSC algorithm with a region size of 16 and 20 iterations. The LSC algorithm creates superpixels that copy edges in images well while they are more consistent in shape and size then the other two algorithms. This is an advantage for the proposed algorithm for graph creation explained in later steps. Refer to [images](images) folder for comparison of [SLIC](images/slic.png), [SEEDS](images/seeds.png), and [LSC](images/lsc.png) results.
+3. Apply superpixel segmentation with LSC algorithm with a region size of 16 and 20 iterations. The LSC algorithm creates superpixels that copy edges in images well while they are more consistent in shape and size then the other two algorithms. This is an advantage for the proposed algorithm for graph creation explained in later steps. Refer to the [images](images) folder for comparison of [SLIC](images/slic.png), [SEEDS](images/seeds.png), and [LSC](images/lsc.png) results ([images/slic.png](images/slic.png), [images/seeds.png](images/seeds.png), [images/lsc.png](images/lsc.png)).
 4. Get inverted superpixel contour mask and apply L2 distance transform. The distance transform is shown below for one of the images.\
 ![Superpixel mask and its distance transform](images/superpixels_and_dist_trans.png)
 5. Compute the local maxima of the distance transform. The result is shown below.\
