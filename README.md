@@ -114,4 +114,10 @@ The code for the third task is available in the [`task3.ipynb`](task3.ipynb) not
 
 ### Sparse Optical Flow
 
-TODO
+To only find points of interest to track in the sparse optical flow, the MOG masks are combined using a bitwise OR operation. The resulting mask is shown below before and after morphological opening with a 15x15 elliptic structuring element to remove noise at the right side of the mask.
+
+![Bitwise OR of Each MOG Mask](images/mask_in_one.png)
+
+The images below show 3 frames from the video with sparse optical flow overlayed.
+
+![Sparse Optical Flow](images/sparse.png)
