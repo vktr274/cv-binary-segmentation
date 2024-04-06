@@ -128,6 +128,16 @@ params = {
 }
 ```
 
+where:
+
+- `pyr_scale` is the size multiplier for each layer of the image pyramid,
+- `levels` is the number of pyramid layers including the initial image,
+- `winsize` is the averaging window size,
+- `iterations` is the number of iterations the algorithm does at each pyramid level,
+- `poly_n` is the size of the pixel neighborhoods that are approximated with a polynomial for each pixel,
+- `poly_sigma` is the standard deviation of the Gaussian that is used to smooth derivatives used as a basis for the polynomial approximations
+- `flags` is a parameter for optional flags.
+
 ![Dense Optical Flow 1](images/dense1.png)
 
 ![Dense Optical Flow 2](images/dense2.png)
@@ -148,6 +158,18 @@ feature_params = {
 }
 ```
 
+where:
+
+- `mask` is the mask with the area of interest,
+- `maxCorners` is the maximum number of corners (tracked points) to find,
+- `qualityLevel` is a value that is used to multiply the best corner's quality measure. The corners with the quality measure less than the product are rejected,
+- `minDistance` is the minimum possible Euclidean distance between the returned corners,
+- `blockSize` is the size of the block where derivatives are computed.
+
+The parameters for `cv2.goodFeaturesToTrack` were chosen as a result of trial and error to find points that are going to be well tracked throughout the video.
+
+The sparse optical flow was computed using the Lucas-Kanade method with OpenCV (`cv2.calcOpticalFlowPyrLK`) with default parameters left unchanged.
+
 The mask used is shown below.
 
 ![Bitwise OR of Each MOG Mask](images/mask_in_one.png)
@@ -155,3 +177,8 @@ The mask used is shown below.
 The images below show 3 frames from the video with sparse optical flow overlayed.
 
 ![Sparse Optical Flow](images/sparse.png)
+
+## References
+
+[OpenCV Documentation](https://docs.opencv.org/4.9.0/)\
+[Two-Frame Motion Estimation Based on Polynomial Expansion, Gunnar Farnebäck, 2003](https://www.diva-portal.org/smash/get/diva2:273847/FULLTEXT01.pdf)
