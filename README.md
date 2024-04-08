@@ -138,11 +138,19 @@ where:
 - `poly_sigma` is the standard deviation of the Gaussian that is used to smooth derivatives used as a basis for the polynomial approximations
 - `flags` is a parameter for optional flags.
 
+We also tried to identify the moving object from the dense flow frames based on magnitude thresholding. Magnitude was normalized to the range 0-255 and thresholded at 45. The resulting mask was then processed in the same way as the MOG masks - finding the largest contour, filling it, and finding the bounding box around it to show in the current frame. No segmentation was done due to incorrect identification of the moving object caused by heavy noise in the dense optical flow in earlier frames of the video. This can be seen in the images below - the first two visualizations show incorrect identification of the moving object, while the last four visualizations show correct identification of the moving object in the dense optical flow frames.
+
 ![Dense Optical Flow 1](images/dense1.png)
 
 ![Dense Optical Flow 2](images/dense2.png)
 
 ![Dense Optical Flow 3](images/dense3.png)
+
+![Dense Optical Flow 4](images/dense4.png)
+
+![Dense Optical Flow 5](images/dense5.png)
+
+![Dense Optical Flow 6](images/dense6.png)
 
 ### Sparse Optical Flow
 
