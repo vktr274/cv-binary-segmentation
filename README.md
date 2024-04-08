@@ -135,7 +135,7 @@ where:
 - `winsize` is the averaging window size,
 - `iterations` is the number of iterations the algorithm does at each pyramid level,
 - `poly_n` is the size of the pixel neighborhoods that are approximated with a polynomial for each pixel,
-- `poly_sigma` is the standard deviation of the Gaussian that is used to smooth derivatives used as a basis for the polynomial approximations
+- `poly_sigma` is the standard deviation of the Gaussian that is used to smooth derivatives used as a basis for the polynomial approximations,
 - `flags` is a parameter for optional flags.
 
 We also tried to identify the moving object from the dense flow frames based on magnitude thresholding. Magnitude was normalized to the range 0-255 and thresholded at 70. The resulting mask was then processed in the same way as the MOG masks - finding the largest contour, filling it, and finding the bounding box around it to show in the current frame. No segmentation was done due to incorrect identification of the moving object caused by heavy noise in the dense optical flow in earlier frames of the video when the walking person was more distant. This can be seen in the images below - the first two visualizations show incorrect identification of the moving object, while the last four visualizations show correct identification of the moving object in the dense optical flow frames.
