@@ -37,15 +37,18 @@ def mouse_callback(event, x, y, _, param):
 
 def semisupervised_segmentation(image):
     """
-    Implements the algorithm proposed in the task2.ipynb notebook. Steps in the comments are the same as in the README.md file.
+    Implements the algorithm proposed in the task2.ipynb notebook.
+    Steps in the comments are the same as in the README.md file.
     """
-    # 1. Blur the image to reduce noise while keeping edges sharp using a median filter of size 7x7.
+    # 1. Blur the image to reduce noise while keeping edges sharp
+    # using a median filter of size 7x7.
     median_blurred = cv2.medianBlur(image, 7)
 
     # Convert the image from BGR to L*a*b* color space for superpixel segmentation.
     lab_img = cv2.cvtColor(median_blurred, cv2.COLOR_BGR2Lab)
 
-    # 2. Apply superpixel segmentation with LSC algorithm with a region size of 16 and 20 iterations.
+    # 2. Apply superpixel segmentation with LSC algorithm with a region
+    # size of 16 and 20 iterations.
     superpixels_lsc = cv2.ximgproc.createSuperpixelLSC(lab_img, region_size=16)
     superpixels_lsc.iterate(20)
     superpixels_lsc_mask = superpixels_lsc.getLabelContourMask()
@@ -61,7 +64,8 @@ def semisupervised_segmentation(image):
         mask = np.where(superpixel_labels == i, 1, 0).astype(np.uint8)
         masks.append(mask)
 
-    # 3. Get inverted superpixel contour mask and apply L2 distance transform. The distance transform is shown below for one of the images.
+    # 3. Get inverted superpixel contour mask and apply L2 distance transform.
+    # The distance transform is shown below for one of the images.
     dist_trans = cv2.distanceTransform(~superpixels_lsc_mask, cv2.DIST_L2, 5)  # type: ignore
 
     local_maxima_coord = []
@@ -78,7 +82,9 @@ def semisupervised_segmentation(image):
 
     local_maxima_coord = np.array(local_maxima_coord)
 
-    # 5. Compute Delaunay triangulation of the local maxima using Scipy and create a graph with nodes as local maxima and edges as Delaunay triangles using NetworkX.
+    # 5. Compute Delaunay triangulation of the local maxima using Scipy
+    # and create a graph with nodes as local maxima and edges as Delaunay
+    # triangles using NetworkX.
     trangulation = Delaunay(local_maxima_coord)
     G = nx.Graph()
     for path in trangulation.simplices:
@@ -86,7 +92,8 @@ def semisupervised_segmentation(image):
 
     clicks = []
 
-    # 6. Show image with superpixel contours overlayed with the original image. Allow the user to select points around an area of interest.
+    # 6. Show image with superpixel contours overlayed with the original image.
+    # Allow the user to select points around an area of interest.
     cv2.imshow("Image", superpixel_contour_img)
     cv2.setMouseCallback("Image", mouse_callback, (dist_trans, clicks))
     cv2.waitKey(0)
@@ -128,7 +135,9 @@ def semisupervised_segmentation(image):
     path = dijkstra_path(G, indices_of_nearest[0], indices_of_nearest[-1])
     result = np.append(result, values=local_maxima_coord[path][1:-1], axis=0)  # type: ignore
 
-    # 9. Create mask of superpixels (each dilated by a rectangular 11x11 structuring element in 1 iteration to ensure they are mostly connected) that the shortest path traverses.
+    # 9. Create mask of superpixels (each dilated by a rectangular 11x11 structuring
+    # element in 1 iteration to ensure they are mostly connected) that the shortest
+    # path traverses.
     selected_superpixels = np.zeros(dist_trans.shape, np.uint8)
     struct_elem = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11))
 
@@ -137,11 +146,13 @@ def semisupervised_segmentation(image):
             if mask[(dist_trans.shape[0] - 1) - local_max[1], local_max[0]] == 1:
                 selected_superpixels |= cv2.dilate(mask, struct_elem, iterations=1)  # type: ignore
 
-    # 10. Dilate the mask in 4 iterations using an 7x7 elliptic structuring element to smooth the mask and connect parts that might not yet be connected.
+    # 10. Dilate the mask in 4 iterations using an 7x7 elliptic structuring element
+    # to smooth the mask and connect parts that might not yet be connected.
     struct_elem = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
     dilated_selection = cv2.dilate(selected_superpixels, struct_elem, iterations=4)
 
-    # 11. Find contour of the mask and fill it. Compute XOR of the mask with the dilated mask which results in a mask with containing holes of the dilated mask.
+    # 11. Find contour of the mask and fill it. Compute XOR of the mask with the
+    # dilated mask which results in a mask with containing holes of the dilated mask.
     contours, _ = cv2.findContours(
         dilated_selection, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
     )
